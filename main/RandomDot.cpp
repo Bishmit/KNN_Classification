@@ -1,15 +1,16 @@
-#include "CreateDot.h"
+#include "RandomDot.h"
 
-CreateDot::CreateDot(int x, int y) {
+RandomDot::RandomDot(int x, int y)
+{
     circle.setRadius(5.f);
     sf::Color rgb;
-    int colorIndex = (std::rand() % 2);
+    int colorIndex = (std::rand() % 3);
     switch (colorIndex) {
     case 0:
         rgb = sf::Color::Red;
         break;
-    case 1:
-        rgb = sf::Color::Green;
+    case 1: 
+        rgb = sf::Color::Green; 
         break;
     case 2:
         rgb = sf::Color::Blue;
@@ -23,20 +24,22 @@ CreateDot::CreateDot(int x, int y) {
     circle.setPosition(x, y);
 }
 
-void CreateDot::update() {
+void RandomDot::update()
+{
     
 }
 
-void CreateDot::render(sf::RenderWindow& window) {
+void RandomDot::render(sf::RenderWindow& window)
+{
     window.draw(circle);
 }
 
-sf::Vector2f CreateDot::getposition()
+sf::Vector2f RandomDot::getposition()
 {
     return circle.getPosition(); 
 }
 
-sf::Color CreateDot::getcolor()
+sf::Color RandomDot::getcolor()
 {
-    return circle.getFillColor();
+    return circle.getFillColor(); 
 }

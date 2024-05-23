@@ -136,10 +136,12 @@
     <ClCompile Include="CreateDot.cpp" />
     <ClCompile Include="KNN.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="RandomDot.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CreateDot.h" />
     <ClInclude Include="KNN.h" />
+    <ClInclude Include="RandomDot.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
