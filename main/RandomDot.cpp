@@ -9,8 +9,8 @@ RandomDot::RandomDot(int x, int y)
     case 0:
         rgb = sf::Color::Red;
         break;
-    case 1: 
-        rgb = sf::Color::Green; 
+    case 1:
+        rgb = sf::Color::Green;
         break;
     case 2:
         rgb = sf::Color::Blue;
@@ -26,7 +26,7 @@ RandomDot::RandomDot(int x, int y)
 
 void RandomDot::update()
 {
-    
+
 }
 
 void RandomDot::render(sf::RenderWindow& window)
@@ -36,10 +36,10 @@ void RandomDot::render(sf::RenderWindow& window)
 
 sf::Vector2f RandomDot::getposition()
 {
-    return circle.getPosition(); 
+    return circle.getPosition();
 }
 
 sf::Color RandomDot::getcolor()
 {
-    return circle.getFillColor(); 
+    return circle.getFillColor();
 }

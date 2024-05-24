@@ -1,8 +1,8 @@
 #include "KNN.h"
 
-KNN::KNN() : window(sf::VideoMode(1000, 600), "KNN Classification"), min_(INT_MAX), clickDetected(false), clickDetected2(false){
+KNN::KNN() : window(sf::VideoMode(1000, 600), "KNN Classification"), min_(INT_MAX), clickDetected(false), clickDetected2(false), colorcheck(false),mostFrequentColor(sf::Color::White) {
     initRandomDotsOverScreen();
-    
+
 }
 
 void KNN::processEvents() {
@@ -19,6 +19,12 @@ void KNN::processEvents() {
                 int X = mousePos.x;
                 int Y = mousePos.y;
                 dotvector.emplace_back(X, Y);
+            }
+        }
+
+        if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Right && colorcheck == true) {
+            for (auto& dot : dotvector) {
+                dot.setColor(mostFrequentColor); 
             }
         }
 
@@ -39,8 +45,10 @@ void KNN::update() {
             float y1 = i.getposition().y;
             float x2 = j.getposition().x;
             float y2 = j.getposition().y;
+            sf::Color colorA = i.getcolor();
+            sf::Color colorB = j.getcolor(); 
             float d = euclideanDistance(x1, y1, x2, y2);
-            distances.push_back(S(x1, y1, x2, y2, d)); // Store distance and coordinates
+            distances.push_back(S(x1, y1, x2, y2, d, colorA, colorB)); // Store distance, coordinates and colors 
         }
     }
 
@@ -74,11 +82,55 @@ void KNN::render() {
     }
 
     for (const auto& s : nearestDistances) {
-        //std::cout << "Distance: " << s.d << ", Coordinates: (" << s.x1 << ", " << s.y1 << "), (" << s.x2 << ", " << s.y2 << ")" << std::endl;
         line[0] = sf::Vertex(sf::Vector2f(s.x1, s.y1), sf::Color::Cyan);
         line[1] = sf::Vertex(sf::Vector2f(s.x2, s.y2), sf::Color::Cyan);
         window.draw(line, 2, sf::Lines);
     }
+
+    if (clickDetected2) {
+        int countRed = 0, countGreen = 0, countBlue = 0;
+
+        // First pass to count the colors
+        for (const auto& s : nearestDistances) {
+            if (s.colorA == sf::Color::Red) {
+                countRed++;
+            }
+            else if (s.colorA == sf::Color::Green) {
+                countGreen++;
+            }
+            else if (s.colorA == sf::Color::Blue) {
+                countBlue++;
+            }
+        }
+
+        // Determine the most frequent color
+        if (countRed >= countGreen && countRed >= countBlue) {
+            mostFrequentColor = sf::Color::Red;
+        }
+        else if (countGreen >= countRed && countGreen >= countBlue) {
+            mostFrequentColor = sf::Color::Green;
+        }
+        else if (countBlue >= countRed && countBlue >= countGreen) {
+            mostFrequentColor = sf::Color::Blue;
+        }
+
+        std::cout << "Most frequent color: ";
+        if (mostFrequentColor == sf::Color::Red) {
+            std::cout << "Red" << std::endl;
+            colorcheck = true; 
+        }
+        else if (mostFrequentColor == sf::Color::Green) {
+            std::cout << "Green" << std::endl;
+            colorcheck = true; 
+        }
+        else if (mostFrequentColor == sf::Color::Blue) {
+            std::cout << "Blue" << std::endl;
+            colorcheck = true; 
+        }
+
+        clickDetected2 = false; 
+    }
+
 
     window.display();
 }

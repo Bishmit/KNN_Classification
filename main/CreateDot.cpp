@@ -24,7 +24,7 @@ CreateDot::CreateDot(int x, int y) {
 }
 
 void CreateDot::update() {
-    
+   
 }
 
 void CreateDot::render(sf::RenderWindow& window) {
@@ -33,10 +33,14 @@ void CreateDot::render(sf::RenderWindow& window) {
 
 sf::Vector2f CreateDot::getposition()
 {
-    return circle.getPosition(); 
+    return circle.getPosition();
 }
 
 sf::Color CreateDot::getcolor()
 {
     return circle.getFillColor();
+}
+
+void CreateDot::setColor(const sf::Color& color) { 
+    circle.setFillColor(color);
 }
